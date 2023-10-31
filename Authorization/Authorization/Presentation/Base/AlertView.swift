@@ -15,8 +15,6 @@ struct AlertView: View {
         case bar
     }
 
-    @Environment(\.dismiss) var dismiss
-
     public var message: String?
     public var type: AlertType
     public var onDismiss: (() -> Void)?
@@ -32,12 +30,15 @@ struct AlertView: View {
     }
 
     var body: some View {
-        switch type {
-        case .alert:
-            alert
-        case .bar:
-            snack
+        VStack {
+            switch type {
+            case .alert:
+                alert
+            case .bar:
+                snack
+            }
         }
+        .transition(.move(edge: type == .alert ? .top : .bottom))
     }
 
     private var alert: some View {
@@ -50,10 +51,8 @@ struct AlertView: View {
                 .padding(.top, 80)
             Spacer()
         }
-        .transition(.move(edge: .top))
         .onAppear {
             doAfter(Theme.Timeout.snackbarMessageLongTimeout) {
-                dismiss()
                 onDismiss?()
             }
         }
@@ -64,13 +63,11 @@ struct AlertView: View {
             Spacer()
             SnackBarView(message: message)
         }
-        .transition(.move(edge: .bottom))
         .onTapGesture {
             onDismiss?()
         }
         .onAppear {
             doAfter(Theme.Timeout.snackbarMessageLongTimeout) {
-                dismiss()
                 onDismiss?()
             }
         }

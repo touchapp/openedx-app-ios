@@ -17,25 +17,7 @@ public class SignInViewModel: ObservableObject {
         case loaded
         case error(AlertView.AlertType, String)
     }
-    @Published private(set) var state: State = .loaded
-
-
-    @Published private(set) var showError: Bool = false
-    @Published private(set) var showAlert: Bool = false
-    var errorMessage: String? {
-        didSet {
-            withAnimation {
-                showError = errorMessage != nil
-            }
-        }
-    }
-    var alertMessage: String? {
-        didSet {
-            withAnimation {
-                showAlert = alertMessage != nil
-            }
-        }
-    }
+    @Published var state: State = .loaded
     
     let router: AuthorizationRouter
     
@@ -58,11 +40,11 @@ public class SignInViewModel: ObservableObject {
     @MainActor
     func login(username: String, password: String) async {
         guard validator.isValidEmail(username) else {
-            errorMessage = AuthLocalization.Error.invalidEmailAddress
+            state =  .error(.bar, AuthLocalization.Error.invalidEmailAddress)
             return
         }
         guard validator.isValidPassword(password) else {
-            errorMessage = AuthLocalization.Error.invalidPasswordLenght
+            state = .error(.bar, AuthLocalization.Error.invalidPasswordLenght)
             return
         }
         
@@ -76,13 +58,13 @@ public class SignInViewModel: ObservableObject {
             state = .loaded
             if let validationError = error.validationError,
                let value = validationError.data?["error_description"] as? String {
-                errorMessage = value
+                state = .error(.bar, value)
             } else if case APIError.invalidGrant = error {
-                errorMessage = CoreLocalization.Error.invalidCredentials
+                state = .error(.bar, CoreLocalization.Error.invalidCredentials)
             } else if error.isInternetError {
-                errorMessage = CoreLocalization.Error.slowOrNoInternetConnection
+                state = .error(.bar, CoreLocalization.Error.slowOrNoInternetConnection)
             } else {
-                errorMessage = CoreLocalization.Error.unknownError
+                state = .error(.bar, CoreLocalization.Error.unknownError)
             }
         }
     }

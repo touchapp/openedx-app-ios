@@ -32,7 +32,7 @@
 		BAD56D1F2AEBC3860064918E /* AuthWelcomeBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD56D1E2AEBC3860064918E /* AuthWelcomeBackView.swift */; };
 		BAD56D232AEBC3F00064918E /* ForgotRegisterButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD56D222AEBC3F00064918E /* ForgotRegisterButtonView.swift */; };
 		BAD56D252AEBC5600064918E /* SignInContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD56D242AEBC5600064918E /* SignInContentView.swift */; };
-		BAD56D272AEBC8560064918E /* AuthAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD56D262AEBC8560064918E /* AuthAlertView.swift */; };
+		BAD56D272AEBC8560064918E /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD56D262AEBC8560064918E /* AlertView.swift */; };
 		BAD56D292AEBCB3F0064918E /* EdxSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD56D282AEBCB3F0064918E /* EdxSignInView.swift */; };
 		DE843D6BB1B9DDA398494890 /* Pods_App_Authorization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47BCFB7C19382EECF15131B6 /* Pods_App_Authorization.framework */; };
 /* End PBXBuildFile section */
@@ -89,7 +89,7 @@
 		BAD56D1E2AEBC3860064918E /* AuthWelcomeBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthWelcomeBackView.swift; sourceTree = "<group>"; };
 		BAD56D222AEBC3F00064918E /* ForgotRegisterButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotRegisterButtonView.swift; sourceTree = "<group>"; };
 		BAD56D242AEBC5600064918E /* SignInContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInContentView.swift; sourceTree = "<group>"; };
-		BAD56D262AEBC8560064918E /* AuthAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAlertView.swift; sourceTree = "<group>"; };
+		BAD56D262AEBC8560064918E /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		BAD56D282AEBCB3F0064918E /* EdxSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdxSignInView.swift; sourceTree = "<group>"; };
 		E78971D8E6ED2116BBF9FD66 /* Pods-App-Authorization.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization.release.xcconfig"; path = "Target Support Files/Pods-App-Authorization/Pods-App-Authorization.release.xcconfig"; sourceTree = "<group>"; };
 		F52826C68AEA1CF4769389EA /* Pods-App-Authorization.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization.releasestage.xcconfig"; path = "Target Support Files/Pods-App-Authorization/Pods-App-Authorization.releasestage.xcconfig"; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 				BAD56D1C2AEBC2F10064918E /* AuthLogoView.swift */,
 				BAD56D1E2AEBC3860064918E /* AuthWelcomeBackView.swift */,
 				BAD56D222AEBC3F00064918E /* ForgotRegisterButtonView.swift */,
-				BAD56D262AEBC8560064918E /* AuthAlertView.swift */,
+				BAD56D262AEBC8560064918E /* AlertView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -499,7 +499,7 @@
 				025F40E229D360E20064C183 /* ResetPasswordViewModel.swift in Sources */,
 				BAD56D292AEBCB3F0064918E /* EdxSignInView.swift in Sources */,
 				BAD56D1F2AEBC3860064918E /* AuthWelcomeBackView.swift in Sources */,
-				BAD56D272AEBC8560064918E /* AuthAlertView.swift in Sources */,
+				BAD56D272AEBC8560064918E /* AlertView.swift in Sources */,
 				BAD56D1B2AEBC2D40064918E /* AuthBackgroundView.swift in Sources */,
 				02066B462906D72F00F4307E /* SignUpViewModel.swift in Sources */,
 				02A2ACDB2A4B016100FBBBBB /* AuthorizationAnalytics.swift in Sources */,

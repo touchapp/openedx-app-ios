@@ -22,7 +22,11 @@ public struct SignInView: View {
             AuthBackgroundView(image: CoreAssets.authBackground.swiftUIImage)
             SignInContentView(viewModel: viewModel)
             if case .error(let type, let message) = viewModel.state {
-                AlertView(message: message, type: type)
+                AlertView(
+                    message: message,
+                    type: type,
+                    onDismiss: { viewModel.state = .loaded }
+                )
             }
         }
         .hideNavigationBar()
