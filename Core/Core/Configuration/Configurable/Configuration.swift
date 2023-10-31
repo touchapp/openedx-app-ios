@@ -19,7 +19,7 @@ public class Configuration: Configurable {
     public var baseURL: URL {
         switch environment {
         case .debugDev, .releaseDev:
-            return URL(string: "https://raccoonapis.sandbox.edx.org")!
+            return URL(string: "https://example-dev.com")!
         case .debugStage, .releaseStage:
             return URL(string: "https://example-stage.com")!
         case .debugProd, .releaseProd:
@@ -30,7 +30,7 @@ public class Configuration: Configurable {
     public var oAuthClientId: String {
         switch environment {
         case .debugDev, .releaseDev:
-            return "rg-edx-oauth-client-id"
+            return "DEV_CLIENT_ID"
         case .debugStage, .releaseStage:
             return "STAGE_CLIENT_ID"
         case .debugProd, .releaseProd:
