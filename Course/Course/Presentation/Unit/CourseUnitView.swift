@@ -199,7 +199,45 @@ public struct CourseUnitView: View {
         }
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(false)
-        .navigationTitle("")
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                VStack(spacing: 0) {
+                    let chapter = viewModel.chapters[viewModel.chapterIndex]
+                    let name = chapter.displayName
+                    let sequenceName = chapter.childs[viewModel.sequentialIndex].displayName
+                    Text(name).font(.headline)
+                    Menu(content: {
+                        Picker("", selection: Binding(get: {
+                            viewModel.verticals[viewModel.verticalIndex].id
+                        }, set: { value in
+                            let verticalIndex = viewModel.verticals.firstIndex(where: {$0.id == value})
+                            guard let verticalIndex = verticalIndex else { return }
+                            viewModel.router.replaceCourseUnit(
+                                courseName: viewModel.courseName,
+                                blockId: viewModel.lessonID,
+                                courseID: viewModel.courseID,
+                                sectionName: sectionName,
+                                verticalIndex: verticalIndex,
+                                chapters: viewModel.chapters,
+                                chapterIndex: viewModel.chapterIndex,
+                                sequentialIndex: viewModel.sequentialIndex)
+                        })) {
+                            ForEach(viewModel.verticals, id: \.id) { element in
+                                HStack {
+                                    Text(element.displayName)
+                                    if element.completion > 0 {
+                                        Image(systemName: "checkmark.circle.fill")
+                                    }
+                                }
+                                .tag(element.id)
+                            }
+                        }
+                    }, label: {
+                        Text(sequenceName).font(.subheadline)
+                    })
+                }
+            }
+        }
         .ignoresSafeArea()
             .background(
                 Theme.Colors.background
