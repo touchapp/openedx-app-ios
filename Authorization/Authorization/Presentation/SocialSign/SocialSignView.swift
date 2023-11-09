@@ -41,17 +41,16 @@ struct SocialSignView: View {
     // MARK: - Views -
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 16) {
             headerView
             buttonsView
         }
-        .padding(.bottom, 20)
+        .padding(.vertical, 32)
     }
 
     private var headerView: some View {
         HStack {
             Text("\(AuthLocalization.or) \(title.lowercased()):")
-                .padding(.vertical, 20)
                 .font(.system(size: 17, weight: .medium))
             Spacer()
         }
@@ -59,30 +58,31 @@ struct SocialSignView: View {
 
     private var buttonsView: some View {
         Group {
-            LabelButton(
+            SocialButton(
+                image: CoreAssets.iconApple.swiftUIImage,
+                title: "\(title) \(AuthLocalization.apple)",
+                backgroundColor: .black,
+                action: viewModel.signInWithApple
+            )
+            SocialButton(
                 image: CoreAssets.iconGoogleWhite.swiftUIImage,
                 title: "\(title) \(AuthLocalization.google)",
-                textColor: .black,
-                backgroundColor: UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.00).sui,
+                textColor: UIColor(red: 0.44, green: 0.44, blue: 0.44, alpha: 1.00).sui,
+                backgroundColor: .white,
+                borderColor: UIColor(red: 0.44, green: 0.44, blue: 0.44, alpha: 1.00).sui,
                 action: viewModel.signInWithGoogle
             )
-            LabelButton(
+            SocialButton(
                 image: CoreAssets.iconFacebookWhite.swiftUIImage,
                 title: "\(title) \(AuthLocalization.facebook)",
                 backgroundColor: UIColor(red: 0.09, green: 0.46, blue: 0.95, alpha: 1.00).sui,
                 action: viewModel.signInWithFacebook
             )
-            LabelButton(
+            SocialButton(
                 image: CoreAssets.iconMicrosoftWhite.swiftUIImage,
                 title: "\(title) \(AuthLocalization.microsoft)",
                 backgroundColor: UIColor(red: 0.18, green: 0.18, blue: 0.18, alpha: 1.00).sui,
                 action: viewModel.signInWithMicrosoft
-            )
-            LabelButton(
-                image: CoreAssets.iconApple.swiftUIImage,
-                title: "\(title) \(AuthLocalization.apple)",
-                backgroundColor: .black,
-                action: viewModel.signInWithApple
             )
         }
     }

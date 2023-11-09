@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct LabelButton: View {
+public struct SocialButton: View {
 
     // MARK: - Properties -
 
@@ -15,6 +15,7 @@ public struct LabelButton: View {
     private var title: String
     private var textColor: Color
     private var backgroundColor: Color
+    private var borderColor: Color?
     private var cornerRadius: CGFloat
     private var action: () -> Void
 
@@ -23,13 +24,15 @@ public struct LabelButton: View {
         title: String,
         textColor: Color = .white,
         backgroundColor: Color = .accentColor,
-        cornerRadius: CGFloat = 8,
+        borderColor: Color? = nil,
+        cornerRadius: CGFloat = Theme.Shapes.buttonRadius,
         action: @escaping () -> Void
     ) {
         self.image = image
         self.title = title
         self.textColor = textColor
         self.backgroundColor = backgroundColor
+        self.borderColor = borderColor
         self.cornerRadius = cornerRadius
         self.action = action
     }
@@ -43,6 +46,7 @@ public struct LabelButton: View {
             Label {
                 Text(title)
                     .foregroundStyle(textColor)
+                    .font(.system(size: 17, weight: .medium))
                     .padding(.leading, 10)
                 Spacer()
             } icon: {
@@ -50,9 +54,14 @@ public struct LabelButton: View {
             }
         }
         .frame(height: 44)
-        .background(backgroundColor)
-        .clipShape(
+        .background {
+            Theme.Shapes.buttonShape
+                .fill(backgroundColor)
+        }
+        .overlay(
             RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(style: .init(lineWidth: 1, lineCap: .round, lineJoin: .round, miterLimit: 1))
+                    .foregroundColor(borderColor ?? backgroundColor)
         )
 
     }

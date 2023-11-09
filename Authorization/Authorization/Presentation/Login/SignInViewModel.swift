@@ -16,24 +16,13 @@ import MSAL
 
 public class SignInViewModel: ObservableObject {
     
-    @Published private(set) var isShowProgress = false
-    @Published private(set) var showError: Bool = false
-    @Published private(set) var showAlert: Bool = false
-    var errorMessage: String? {
-        didSet {
-            withAnimation {
-                showError = errorMessage != nil
-            }
-        }
+    enum State: Equatable {
+        case loading
+        case loaded
+        case error(AlertBarView.AlertType, String)
     }
-    var alertMessage: String? {
-        didSet {
-            withAnimation {
-                showAlert = alertMessage != nil
-            }
-        }
-    }
-    
+    @Published var state: State = .loaded
+
     let router: AuthorizationRouter
     
     private let interactor: AuthInteractorProtocol
@@ -55,31 +44,31 @@ public class SignInViewModel: ObservableObject {
     @MainActor
     func login(username: String, password: String) async {
         guard validator.isValidEmail(username) else {
-            errorMessage = AuthLocalization.Error.invalidEmailAddress
+            state = .error(.bar, AuthLocalization.Error.invalidEmailAddress)
             return
         }
         guard validator.isValidPassword(password) else {
-            errorMessage = AuthLocalization.Error.invalidPasswordLenght
+            state = .error(.bar, AuthLocalization.Error.invalidPasswordLenght)
             return
         }
         
-        isShowProgress = true
+        state = .loading
         do {
             let user = try await interactor.login(username: username, password: password)
             analytics.setUserID("\(user.id)")
             analytics.userLogin(method: .password)
             router.showMainScreen()
         } catch let error {
-            isShowProgress = false
+            state = .loaded
             if let validationError = error.validationError,
                let value = validationError.data?["error_description"] as? String {
-                errorMessage = value
+                state = .error(.bar, value)
             } else if case APIError.invalidGrant = error {
-                errorMessage = CoreLocalization.Error.invalidCredentials
+                state = .error(.bar, CoreLocalization.Error.invalidCredentials)
             } else if error.isInternetError {
-                errorMessage = CoreLocalization.Error.slowOrNoInternetConnection
+                state = .error(.bar, CoreLocalization.Error.slowOrNoInternetConnection)
             } else {
-                errorMessage = CoreLocalization.Error.unknownError
+                state = .error(.bar, CoreLocalization.Error.unknownError)
             }
         }
     }
@@ -87,7 +76,7 @@ public class SignInViewModel: ObservableObject {
     func sign(with result: Result<Socials, Error>) {
         result.success(social)
         result.failure { error in
-            errorMessage = error.localizedDescription
+            state = .error(.bar, error.localizedDescription)
         }
     }
 
@@ -141,23 +130,23 @@ public class SignInViewModel: ObservableObject {
 
     private func socialLogin(externalToken: String, backend: String, loginMethod: LoginMethod) {
         Task { @MainActor in
-            isShowProgress = true
+            state = .loading
             do {
                 let user = try await interactor.login(externalToken: externalToken, backend: backend)
                 analytics.setUserID("\(user.id)")
                 analytics.userLogin(method: loginMethod)
                 router.showMainScreen()
             } catch let error {
-                isShowProgress = false
+                state = .loaded
                 if let validationError = error.validationError,
                    let value = validationError.data?["error_description"] as? String {
-                    errorMessage = value
+                    state = .error(.bar, value)
                 } else if case APIError.invalidGrant = error {
-                    errorMessage = CoreLocalization.Error.invalidCredentials
+                    state = .error(.bar, CoreLocalization.Error.invalidCredentials)
                 } else if error.isInternetError {
-                    errorMessage = CoreLocalization.Error.slowOrNoInternetConnection
+                    state = .error(.bar, CoreLocalization.Error.slowOrNoInternetConnection)
                 } else {
-                    errorMessage = CoreLocalization.Error.unknownError
+                    state = .error(.bar, CoreLocalization.Error.unknownError)
                 }
             }
         }

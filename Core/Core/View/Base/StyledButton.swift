@@ -45,7 +45,7 @@ public struct StyledButton: View {
                 .padding(.horizontal, 16)
         }
         .disabled(!isActive)
-        .frame(maxWidth: idiom == .pad ? 260: .infinity, minHeight: isTransparent ? 36 : 42)
+        .frame(maxWidth: idiom == .pad ? 260: .infinity, minHeight: isTransparent ? 36 : 44)
         .background(
             Theme.Shapes.buttonShape
                 .fill(isTransparent ? .clear : buttonColor)
