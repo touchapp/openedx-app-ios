@@ -63,6 +63,8 @@
 		0766DFCE299AB26D00EBEF6A /* EncodedVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0766DFCD299AB26D00EBEF6A /* EncodedVideoPlayer.swift */; };
 		0766DFD0299AB29000EBEF6A /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0766DFCF299AB29000EBEF6A /* PlayerViewController.swift */; };
 		197FB8EA8F92F00A8F383D82 /* Pods_App_Course.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E795BD160CDA7D9C120DE6 /* Pods_App_Course.framework */; };
+		A522956E2AFCFBFD00DB0DFF /* test2_view.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522956D2AFCFBFD00DB0DFF /* test2_view.swift */; };
+		A52295702AFCFC0B00DB0DFF /* test2_viewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A522956F2AFCFC0B00DB0DFF /* test2_viewmodel.swift */; };
 		B8F50317B6B830A0E520C954 /* Pods_App_Course_CourseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E59D2B81E12610964282C5 /* Pods_App_Course_CourseTests.framework */; };
 		DB205BFB2AE81B1200136EC2 /* CourseDateViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB205BFA2AE81B1200136EC2 /* CourseDateViewModelTests.swift */; };
 		DB7D6EAC2ADFCAC50036BB13 /* CourseDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7D6EAB2ADFCAC40036BB13 /* CourseDatesView.swift */; };
@@ -153,6 +155,8 @@
 		99AEF08FD75F1509863D3302 /* Pods-App-CourseDetails.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-CourseDetails.debugprod.xcconfig"; path = "Target Support Files/Pods-App-CourseDetails/Pods-App-CourseDetails.debugprod.xcconfig"; sourceTree = "<group>"; };
 		9B5D3D31A9CFA08B6C4347BD /* Pods-App-CourseDetails.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-CourseDetails.releasedev.xcconfig"; path = "Target Support Files/Pods-App-CourseDetails/Pods-App-CourseDetails.releasedev.xcconfig"; sourceTree = "<group>"; };
 		A47C63D9EB0D866F303D4588 /* Pods-App-Course.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Course.releasestage.xcconfig"; path = "Target Support Files/Pods-App-Course/Pods-App-Course.releasestage.xcconfig"; sourceTree = "<group>"; };
+		A522956D2AFCFBFD00DB0DFF /* test2_view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2_view.swift; sourceTree = "<group>"; };
+		A522956F2AFCFC0B00DB0DFF /* test2_viewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2_viewmodel.swift; sourceTree = "<group>"; };
 		ADC2A1B8183A674705F5F7E2 /* Pods-App-Course.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Course.debug.xcconfig"; path = "Target Support Files/Pods-App-Course/Pods-App-Course.debug.xcconfig"; sourceTree = "<group>"; };
 		B196A14555D0E006995A5683 /* Pods-App-CourseDetails.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-CourseDetails.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-CourseDetails/Pods-App-CourseDetails.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		DB205BFA2AE81B1200136EC2 /* CourseDateViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDateViewModelTests.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 		0289F8E428E1C3510064F8F3 = {
 			isa = PBXGroup;
 			children = (
+				A522956C2AFCFBEC00DB0DFF /* test2_group */,
 				0289F90128E1C3E00064F8F3 /* swiftgen.yml */,
 				0289F8F028E1C3510064F8F3 /* Course */,
 				023812E5297AC8EB0087098F /* CourseTests */,
@@ -444,6 +449,15 @@
 				DB205BFA2AE81B1200136EC2 /* CourseDateViewModelTests.swift */,
 			);
 			path = Unit;
+			sourceTree = "<group>";
+		};
+		A522956C2AFCFBEC00DB0DFF /* test2_group */ = {
+			isa = PBXGroup;
+			children = (
+				A522956D2AFCFBFD00DB0DFF /* test2_view.swift */,
+				A522956F2AFCFC0B00DB0DFF /* test2_viewmodel.swift */,
+			);
+			path = test2_group;
 			sourceTree = "<group>";
 		};
 		D52670044E8768425E23C627 /* Pods */ = {
@@ -736,7 +750,9 @@
 				022C64DC29ACFDEE000F532B /* Data_HandoutsResponse.swift in Sources */,
 				022C64D829ACEC48000F532B /* HandoutsView.swift in Sources */,
 				02454CA82A2619890043052A /* DiscussionView.swift in Sources */,
+				A522956E2AFCFBFD00DB0DFF /* test2_view.swift in Sources */,
 				0265B4B728E2141D00E6EAFD /* Strings.swift in Sources */,
+				A52295702AFCFC0B00DB0DFF /* test2_viewmodel.swift in Sources */,
 				02B6B3C128E1DBA100232911 /* Data_CourseDetailsResponse.swift in Sources */,
 				DB7D6EAC2ADFCAC50036BB13 /* CourseDatesView.swift in Sources */,
 				0766DFCC299AA7A600EBEF6A /* YouTubeVideoPlayer.swift in Sources */,
