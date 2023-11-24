@@ -7,7 +7,7 @@
 
 import Foundation
 
-private enum FacebooKeys: String {
+private enum FacebookKeys: String {
     case enabled = "ENABLED"
     case appID = "FACEBOOK_APP_ID"
     case clientToken = "CLIENT_TOKEN"
@@ -23,10 +23,10 @@ public final class FacebookConfig: NSObject {
     }
 
     init(dictionary: [String: AnyObject]) {
-        appID = dictionary[FacebooKeys.appID.rawValue] as? String
-        clientToken = dictionary[FacebooKeys.clientToken.rawValue] as? String
+        appID = dictionary[FacebookKeys.appID.rawValue] as? String
+        clientToken = dictionary[FacebookKeys.clientToken.rawValue] as? String
         super.init()
-        enabled = requiredKeysAvailable && dictionary[FacebooKeys.enabled.rawValue] as? Bool == true
+        enabled = requiredKeysAvailable && dictionary[FacebookKeys.enabled.rawValue] as? Bool == true
     }
 }
 

@@ -136,7 +136,7 @@ extension Config: ConfigProtocol {
         (features.isAppleSigninEnabled ||
         facebook.enabled ||
         microsoft.enabled ||
-        firebase.enabled)
+        firebase.googleSignInEnabled)
     }
 }
 
