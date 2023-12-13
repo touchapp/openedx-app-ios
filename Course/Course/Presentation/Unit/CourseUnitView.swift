@@ -393,6 +393,7 @@ public struct CourseUnitView: View {
                             isAvailable: isDropdownAvailable,
                             showDropdown: $showDropdown)
                         .padding(.top, 0)
+                        .padding(.horizontal, 48)
                         .offset(y: -25)
                     }
                     if viewModel.courseUnitProgressEnabled {
