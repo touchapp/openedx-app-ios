@@ -372,30 +372,33 @@ public struct CourseUnitView: View {
                     }
                 }
                 VStack(spacing: 0) {
-                    NavigationBar(
-                        title: isDropdownActive ? sequenceTitle : "",
-                        leftButtonAction: {
-                            if viewModel.blockChanged {
-                                NotificationCenter.default.post(
-                                    name: NSNotification.blockChanged,
-                                    object: nil
-                                )
+                    Group {
+                        NavigationBar(
+                            title: isDropdownActive ? sequenceTitle : "",
+                            leftButtonAction: {
+                                if viewModel.blockChanged {
+                                    NotificationCenter.default.post(
+                                        name: NSNotification.blockChanged,
+                                        object: nil
+                                    )
+                                }
+                                viewModel.router.back()
+                                playerStateSubject.send(VideoPlayerState.kill)
                             }
-                            viewModel.router.back()
-                            playerStateSubject.send(VideoPlayerState.kill)
+                        )
+                        .padding(.top, isHorizontal ? 10 : 0)
+                        .padding(.leading, isHorizontal ? -16 : 0)
+                        if isDropdownActive {
+                            CourseUnitDropDownTitle(
+                                title: unitTitle,
+                                isAvailable: isDropdownAvailable,
+                                showDropdown: $showDropdown)
+                            .padding(.top, 0)
+                            .padding(.horizontal, 48)
+                            .offset(y: -25)
                         }
-                    )
-                    .padding(.top, isHorizontal ? 10 : 0)
-                    .padding(.leading, isHorizontal ? -16 : 0)
-                    if isDropdownActive {
-                        CourseUnitDropDownTitle(
-                            title: unitTitle,
-                            isAvailable: isDropdownAvailable,
-                            showDropdown: $showDropdown)
-                        .padding(.top, 0)
-                        .padding(.horizontal, 48)
-                        .offset(y: -25)
                     }
+                    .padding(.trailing, isHorizontal ? 215 : 0)
                     if viewModel.courseUnitProgressEnabled {
                         LessonLineProgressView(viewModel: viewModel)
                             .if(isDropdownActive) { view in
