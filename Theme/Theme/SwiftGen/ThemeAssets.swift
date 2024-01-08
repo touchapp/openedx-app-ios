@@ -50,6 +50,7 @@ public enum ThemeAssets {
   public static let textInputStroke = ColorAsset(name: "TextInputStroke")
   public static let textInputUnfocusedBackground = ColorAsset(name: "TextInputUnfocusedBackground")
   public static let textInputUnfocusedStroke = ColorAsset(name: "TextInputUnfocusedStroke")
+  public static let preloginLogoFillColor = ColorAsset(name: "preloginLogoFillColor")
   public static let warning = ColorAsset(name: "warning")
   public static let white = ColorAsset(name: "white")
   public static let appLogo = ImageAsset(name: "appLogo")

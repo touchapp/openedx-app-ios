@@ -32,7 +32,7 @@ public struct StartupView: View {
                     .padding(.top, isHorizontal ? 20 : 40)
                     .padding(.bottom, isHorizontal ? 0 : 20)
                     .padding(.horizontal, isHorizontal ? 10 : 24)
-                    .colorMultiply(Theme.Colors.accentColor)
+                    .colorMultiply(Theme.Colors.preloginLogoFillColor)
                 
                 VStack {
                     VStack(alignment: .leading) {
