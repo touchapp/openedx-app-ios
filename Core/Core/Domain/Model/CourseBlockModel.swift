@@ -8,6 +8,10 @@
 import Foundation
 
 public struct CourseStructure: Equatable {
+    public static func == (lhs: CourseStructure, rhs: CourseStructure) -> Bool {
+        return lhs.id == rhs.id
+    }
+
     public let id: String
     public let graded: Bool
     public let completion: Double
@@ -42,11 +46,24 @@ public struct CourseStructure: Equatable {
         self.media = media
         self.certificate = certificate
     }
-    
-    public static func == (lhs: CourseStructure, rhs: CourseStructure) -> Bool {
-        return lhs.id == rhs.id
+
+    public func blocksTotalSizeInBytes(quality: DownloadQuality) -> Int {
+        childs.flatMap {
+            $0.childs.flatMap { $0.childs.flatMap { $0.childs.compactMap { $0 } } }
+        }
+        .filter { $0.isDownloadable }
+        .compactMap { $0.video(quality: quality)?.fileSize }
+        .reduce(.zero) { $0 + $1 }
     }
-    
+
+    public func blocksTotalSizeInMb(quality: DownloadQuality) -> Double {
+        Double(blocksTotalSizeInBytes(quality: quality)) / 1024.0 / 1024.0
+    }
+
+    public func blocksTotalSizeInGb(quality: DownloadQuality) -> Double {
+        Double(blocksTotalSizeInBytes(quality: quality)) / 1024.0 / 1024.0 / 1024.0
+    }
+
 }
 
 public struct CourseChapter: Identifiable {
@@ -102,7 +119,7 @@ public struct CourseSequential: Identifiable {
     }
 }
 
-public struct CourseVertical {
+public struct CourseVertical: Identifiable {
     public let blockId: String
     public let id: String
     public let courseId: String
@@ -114,7 +131,7 @@ public struct CourseVertical {
     public var isDownloadable: Bool {
         return childs.first(where: { $0.isDownloadable }) != nil
     }
-    
+
     public init(
         blockId: String,
         id: String,
@@ -155,13 +172,35 @@ public struct CourseBlock: Equatable {
     public let displayName: String
     public let studentUrl: String
     public let subtitles: [SubtitleUrl]?
-    public let videoUrl: String?
-    public let youTubeUrl: String?
-    
+    public let fallback: CourseBlockVideo?
+    public let desktopMP4: CourseBlockVideo?
+    public let mobileHigh: CourseBlockVideo?
+    public let mobileLow: CourseBlockVideo?
+    public let hls: CourseBlockVideo?
+    public let youTube: CourseBlockVideo?
+
     public var isDownloadable: Bool {
-        return videoUrl != nil
+        guard let url = video?.url else { return false }
+        return canDownload(url: url)
     }
-    
+
+    public func video(quality: DownloadQuality) -> CourseBlockVideo? {
+        switch quality {
+        case .auto:
+            hls ?? video
+        case .high:
+            desktopMP4 ?? video
+        case .medium:
+            mobileHigh ?? video
+        case .low:
+            mobileLow ?? video
+        }
+    }
+
+    public var youTubeUrl: String? {
+        youTube?.url
+    }
+
     public init(
         blockId: String,
         id: String,
@@ -173,8 +212,12 @@ public struct CourseBlock: Equatable {
         displayName: String,
         studentUrl: String,
         subtitles: [SubtitleUrl]? = nil,
-        videoUrl: String? = nil,
-        youTubeUrl: String? = nil
+        fallback: CourseBlockVideo?,
+        youTube: CourseBlockVideo?,
+        desktopMP4: CourseBlockVideo?,
+        mobileHigh: CourseBlockVideo?,
+        mobileLow: CourseBlockVideo?,
+        hls: CourseBlockVideo?
     ) {
         self.blockId = blockId
         self.id = id
@@ -186,7 +229,35 @@ public struct CourseBlock: Equatable {
         self.displayName = displayName
         self.studentUrl = studentUrl
         self.subtitles = subtitles
-        self.videoUrl = videoUrl
-        self.youTubeUrl = youTubeUrl
+        self.fallback = fallback
+        self.youTube = youTube
+        self.desktopMP4 = desktopMP4
+        self.mobileHigh = mobileHigh
+        self.mobileLow = mobileLow
+        self.hls = hls
+    }
+
+    func isVideoUrl(url: String) -> Bool {
+        [".mp4", ".m3u8"].contains(where: { url.contains($0) })
+    }
+
+    private func canDownload(url: String) -> Bool {
+        [".mp4"].contains(where: { url.contains($0) })
+    }
+
+    private var video: CourseBlockVideo? {
+       hls ?? desktopMP4 ?? mobileHigh ?? mobileLow ?? fallback
+    }
+}
+
+public struct CourseBlockVideo: Equatable {
+    public let url: String?
+    public let fileSize: Int?
+    public let streamPriority: Int?
+
+    public init(url: String?, fileSize: Int?, streamPriority: Int?) {
+        self.url = url
+        self.fileSize = fileSize
+        self.streamPriority = streamPriority
     }
 }

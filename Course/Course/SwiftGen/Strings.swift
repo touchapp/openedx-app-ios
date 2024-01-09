@@ -19,6 +19,8 @@ public enum CourseLocalization {
     public static let download = CourseLocalization.tr("Localizable", "ACCESSIBILITY.DOWNLOAD", fallback: "Download")
   }
   public enum Alert {
+    /// Accept
+    public static let accept = CourseLocalization.tr("Localizable", "ALERT.ACCEPT", fallback: "Accept")
     /// Rotate your device to view this video in full screen.
     public static let rotateDevice = CourseLocalization.tr("Localizable", "ALERT.ROTATE_DEVICE", fallback: "Rotate your device to view this video in full screen.")
   }
@@ -72,6 +74,26 @@ public enum CourseLocalization {
     public static let title = CourseLocalization.tr("Localizable", "DETAILS.TITLE", fallback: "Course details")
     /// View course
     public static let viewCourse = CourseLocalization.tr("Localizable", "DETAILS.VIEW_COURSE", fallback: "View course")
+  }
+  public enum Download {
+    /// All videos downloaded
+    public static let allVideosDownloaded = CourseLocalization.tr("Localizable", "DOWNLOAD.ALL_VIDEOS_DOWNLOADED", fallback: "All videos downloaded")
+    /// You cannot change the download video quality when all videos are downloading
+    public static let changeQualityAlert = CourseLocalization.tr("Localizable", "DOWNLOAD.CHANGE_QUALITY_ALERT", fallback: "You cannot change the download video quality when all videos are downloading")
+    /// Download
+    public static let download = CourseLocalization.tr("Localizable", "DOWNLOAD.DOWNLOAD", fallback: "Download")
+    /// The videos you've selected are larger than 1 GB. Do you want to download these videos?
+    public static let downloadLargeFileMessage = CourseLocalization.tr("Localizable", "DOWNLOAD.DOWNLOAD_LARGE_FILE_MESSAGE", fallback: "The videos you've selected are larger than 1 GB. Do you want to download these videos?")
+    /// Download to device
+    public static let downloadToDevice = CourseLocalization.tr("Localizable", "DOWNLOAD.DOWNLOAD_TO_DEVICE", fallback: "Download to device")
+    /// Downloading videos...
+    public static let downloadingVideos = CourseLocalization.tr("Localizable", "DOWNLOAD.DOWNLOADING_VIDEOS", fallback: "Downloading videos...")
+    /// Downloads
+    public static let downloads = CourseLocalization.tr("Localizable", "DOWNLOAD.DOWNLOADS", fallback: "Downloads")
+    /// Remaining
+    public static let remaining = CourseLocalization.tr("Localizable", "DOWNLOAD.REMAINING", fallback: "Remaining")
+    /// Videos
+    public static let videos = CourseLocalization.tr("Localizable", "DOWNLOAD.VIDEOS", fallback: "Videos")
   }
   public enum Error {
     /// Course component not found, please reload
