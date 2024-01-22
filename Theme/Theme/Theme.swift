@@ -40,6 +40,7 @@ public struct Theme {
         public private(set) static var white = ThemeAssets.white.swiftUIColor
         public private(set) static var loginNavigationText = ThemeAssets.loginNavigationText.swiftUIColor
         public private(set) static var preloginLogoFillColor = ThemeAssets.preloginLogoFillColor.swiftUIColor
+        public private(set) static var tabBarBackground = ThemeAssets.tabBarBackground.swiftUIColor
 
         public static func update(
             accentColor: Color = ThemeAssets.accentColor.swiftUIColor,

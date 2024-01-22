@@ -44,6 +44,7 @@ public enum ThemeAssets {
   public static let splashBackground = ColorAsset(name: "SplashBackground")
   public static let styledButtonBackground = ColorAsset(name: "StyledButtonBackground")
   public static let styledButtonText = ColorAsset(name: "StyledButtonText")
+  public static let tabBarBackground = ColorAsset(name: "TabBarBackground")
   public static let textPrimary = ColorAsset(name: "TextPrimary")
   public static let textSecondary = ColorAsset(name: "TextSecondary")
   public static let textInputBackground = ColorAsset(name: "TextInputBackground")
