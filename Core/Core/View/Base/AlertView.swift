@@ -288,6 +288,7 @@ public struct AlertView: View {
                     Image(systemName: "xmark")
                         .padding(.trailing, 40)
                         .padding(.top, 24)
+                        .foregroundStyle(Theme.Colors.accentColor)
                 })
                 
             }.frame(maxWidth: type == .logOut ? 390 : nil)
