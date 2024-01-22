@@ -10,34 +10,51 @@ import WebKit
 import SwiftUI
 import Theme
 
+public protocol WebViewNavigationDelegate: AnyObject {
+    func webView(_ webView: WKWebView, shouldLoad request: URLRequest, navigationAction: WKNavigationAction) -> Bool
+}
+
 public struct WebView: UIViewRepresentable {
     
     public class ViewModel: ObservableObject {
         
         @Published var url: String
         let baseURL: String
+        let injections: [WebviewInjection]?
         
-        public init(url: String, baseURL: String) {
+        public init(url: String, baseURL: String, injections: [WebviewInjection]? = nil) {
             self.url = url
             self.baseURL = baseURL
+            self.injections = injections
         }
     }
     
     @ObservedObject var viewModel: ViewModel
     @Binding public var isLoading: Bool
+    var webViewNavDelegate: WebViewNavigationDelegate?
+    
     var refreshCookies: () async -> Void
     
-    public init(viewModel: ViewModel, isLoading: Binding<Bool>, refreshCookies: @escaping () async -> Void) {
+    public init(
+        viewModel: ViewModel,
+        isLoading: Binding<Bool>,
+        refreshCookies: @escaping () async -> Void,
+        navigationDelegate: WebViewNavigationDelegate? = nil
+    ) {
         self.viewModel = viewModel
         self._isLoading = isLoading
         self.refreshCookies = refreshCookies
+        self.webViewNavDelegate = navigationDelegate
     }
     
-    public class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
+    public class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
         var parent: WebView
         
         init(_ parent: WebView) {
             self.parent = parent
+            super.init()
+            
+            addObserver()
         }
         
         public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -79,6 +96,17 @@ public struct WebView: UIViewRepresentable {
             
             guard let url = navigationAction.request.url else { return .cancel }
             
+            let isWebViewDelegateHandled = await (
+                parent.webViewNavDelegate?.webView(
+                    webView,
+                    shouldLoad: navigationAction.request,
+                    navigationAction: navigationAction) ?? false
+            )
+            
+            if isWebViewDelegateHandled {
+                return .cancel
+            }
+            
             let baseURL = await parent.viewModel.baseURL
             if !baseURL.isEmpty, !url.absoluteString.starts(with: baseURL) {
                 if navigationAction.navigationType == .other {
@@ -117,6 +145,36 @@ public struct WebView: UIViewRepresentable {
             }
             return .allow
         }
+        
+        private func addObserver() {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(reload),
+                name: .webviewReloadNotification,
+                object: nil
+            )
+        }
+        
+        fileprivate var webview: WKWebView?
+        
+        @objc private func reload() {
+            parent.isLoading = true
+            webview?.reload()
+        }
+        
+        deinit {
+            NotificationCenter.default.removeObserver(self)
+        }
+
+        public func userContentController(
+            _ userContentController: WKUserContentController,
+            didReceive message: WKScriptMessage
+        ) {
+            let messages = parent.viewModel.injections?.compactMap({$0.messages}).flatMap({$0}) ?? []
+            if let currentMessage = messages.first(where: { $0.name == message.name }) {
+                currentMessage.handler(message.body, message.webView)
+            }
+        }
     }
     
     public func makeCoordinator() -> Coordinator {
@@ -127,8 +185,15 @@ public struct WebView: UIViewRepresentable {
         let webViewConfig = WKWebViewConfiguration()
         
         let webView = WKWebView(frame: .zero, configuration: webViewConfig)
+        #if DEBUG
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+        }
+        #endif
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator
+        
+        context.coordinator.webview = webView
         
         webView.scrollView.bounces = false
         webView.scrollView.alwaysBounceHorizontal = false
@@ -139,9 +204,20 @@ public struct WebView: UIViewRepresentable {
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = Theme.Colors.white.uiColor()
         webView.scrollView.alwaysBounceVertical = false
-        webView.scrollView.layer.cornerRadius = 24
-        webView.scrollView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
+        
+        for injection in viewModel.injections ?? [] {
+            let script = WKUserScript(
+                source: injection.script,
+                injectionTime: injection.injectionTime,
+                forMainFrameOnly: true
+            )
+            webView.configuration.userContentController.addUserScript(script)
+            
+            for message in injection.messages ?? [] {
+                webView.configuration.userContentController.add(context.coordinator, name: message.name)
+            }
+        }
         
         return webView
     }
@@ -156,5 +232,10 @@ public struct WebView: UIViewRepresentable {
                 webview.load(request)
             }
         }
+    }
+    
+    public static func dismantleUIView(_ uiView: WKWebView, coordinator: Coordinator) {
+        uiView.configuration.userContentController.removeAllUserScripts()
+        uiView.configuration.userContentController.removeAllScriptMessageHandlers()
     }
 }
