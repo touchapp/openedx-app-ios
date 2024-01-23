@@ -47,7 +47,7 @@ public struct SignInView: View {
             
             VStack(alignment: .center) {
                 ZStack {
-                    if !isHorizontal {
+                    if !isHorizontal && viewModel.loginBackgroundEnabled {
                         ThemeAssets.loginScreenMap.swiftUIImage
                             .resizable()
                             .frame(maxWidth: 500, maxHeight: 150)

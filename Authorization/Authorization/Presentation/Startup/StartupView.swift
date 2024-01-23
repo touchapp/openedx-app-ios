@@ -27,7 +27,7 @@ public struct StartupView: View {
         ZStack(alignment: .top) {
             VStack(alignment: .leading) {
                 ZStack {
-                    if !isHorizontal {
+                    if !isHorizontal && viewModel.loginBackgroundEnabled {
                         ThemeAssets.loginScreenMap.swiftUIImage
                             .resizable()
                             .frame(maxWidth: 500, maxHeight: 150)
@@ -38,6 +38,7 @@ public struct StartupView: View {
                         .frame(maxWidth: isHorizontal ? 189 : 239, maxHeight: isHorizontal ? 54 : 64)
                         .padding(.top, isHorizontal ? 20 : 40)
                         .padding(.bottom, isHorizontal ? 10 : 40)
+                        .padding(.horizontal, viewModel.loginBackgroundEnabled ? 0 : (isHorizontal ? 10 : 24))
                         .colorMultiply(Theme.Colors.preloginLogoFillColor)
                 }
                 
@@ -126,7 +127,8 @@ public struct StartupView: View {
 struct StartupView_Previews: PreviewProvider {
     static var previews: some View {
         let vm = StartupViewModel(
-            router: AuthorizationRouterMock()
+            router: AuthorizationRouterMock(),
+            config: ConfigMock()
         )
         
         StartupView(viewModel: vm)

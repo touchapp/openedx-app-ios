@@ -45,7 +45,8 @@ class ScreenAssembly: Assembly {
         // MARK: Startup screen
         container.register(StartupViewModel.self) { r in
             StartupViewModel(
-                router: r.resolve(AuthorizationRouter.self)!
+                router: r.resolve(AuthorizationRouter.self)!,
+                config: r.resolve(ConfigProtocol.self)!
             )
         }
         

@@ -12,9 +12,17 @@ public class StartupViewModel: ObservableObject {
     let router: AuthorizationRouter
     @Published var searchQuery: String?
     
+    let config: ConfigProtocol
+
     public init(
-        router: AuthorizationRouter
+        router: AuthorizationRouter,
+        config: ConfigProtocol
     ) {
         self.router = router
+        self.config = config
+    }
+
+    var loginBackgroundEnabled: Bool {
+        config.uiComponents.backgroundLoginImageEnabled
     }
 }

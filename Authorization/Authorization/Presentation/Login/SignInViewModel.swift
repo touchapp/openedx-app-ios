@@ -65,6 +65,10 @@ public class SignInViewModel: ObservableObject {
         config.google.enabled
     }
 
+    var loginBackgroundEnabled: Bool {
+        config.uiComponents.backgroundLoginImageEnabled
+    }
+
     @MainActor
     func login(username: String, password: String) async {
         guard validator.isValidUsername(username) else {
