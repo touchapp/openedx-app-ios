@@ -23,6 +23,6 @@ public class StartupViewModel: ObservableObject {
     }
 
     var loginBackgroundEnabled: Bool {
-        config.uiComponents.backgroundLoginImageEnabled
+        config.theme.backgroundLoginImageEnabled
     }
 }

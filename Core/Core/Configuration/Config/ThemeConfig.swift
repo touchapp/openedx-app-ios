@@ -9,13 +9,16 @@ import Foundation
 
 private enum ThemeKeys: String {
     case isRoundedCorners = "ROUNDED_CORNERS_STYLE"
+    case backgroundLoginImageEnabled = "SHOW_BACKGROUND_IMAGE_ON_LOGIN"
 }
 
 public final class ThemeConfig: NSObject {
     public var isRoundedCorners: Bool
+    public var backgroundLoginImageEnabled: Bool
 
     init(dictionary: [String: AnyObject]) {
         isRoundedCorners = dictionary[ThemeKeys.isRoundedCorners.rawValue] as? Bool != false
+        backgroundLoginImageEnabled = dictionary[ThemeKeys.backgroundLoginImageEnabled.rawValue] as? Bool ?? false
         super.init()
     }
 }

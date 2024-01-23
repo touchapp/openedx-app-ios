@@ -66,7 +66,7 @@ public class SignInViewModel: ObservableObject {
     }
 
     var loginBackgroundEnabled: Bool {
-        config.uiComponents.backgroundLoginImageEnabled
+        config.theme.backgroundLoginImageEnabled
     }
 
     @MainActor
