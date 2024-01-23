@@ -39,9 +39,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="appLogo" width="171" height="48"/>
+        <image name="appLogo" width="192" height="192"/>
         <namedColor name="SplashBackground">
-            <color red="0.31764705882352939" green="0.4823529411764706" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.054901960784313725" green="0.21176470588235294" blue="0.22352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

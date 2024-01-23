@@ -46,11 +46,19 @@ public struct SignInView: View {
             }
             
             VStack(alignment: .center) {
-                ThemeAssets.appLogo.swiftUIImage
-                    .resizable()
-                    .frame(maxWidth: 189, maxHeight: 54)
-                    .padding(.top, isHorizontal ? 20 : 40)
-                    .padding(.bottom, isHorizontal ? 10 : 40)
+                ZStack {
+                    if !isHorizontal {
+                        ThemeAssets.loginScreenMap.swiftUIImage
+                            .resizable()
+                            .frame(maxWidth: 500, maxHeight: 150)
+                            .padding(.top, 40)
+                    }
+                    ThemeAssets.appLogo.swiftUIImage
+                        .resizable()
+                        .frame(maxWidth: isHorizontal ? 189 : 239, maxHeight: isHorizontal ? 54 : 64)
+                        .padding(.top, isHorizontal ? 20 : 40)
+                        .padding(.bottom, isHorizontal ? 10 : 40)
+                }
                 
                 ScrollView {
                     VStack {
