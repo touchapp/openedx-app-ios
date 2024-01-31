@@ -31,9 +31,6 @@ public struct WebViewHtml: UIViewRepresentable {
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = UIColor.clear
         webView.scrollView.alwaysBounceVertical = false
-        if #available(iOS 16.4, *) {
-            webView.isInspectable = true
-        }
     }
 
     public func makeCoordinator() -> Coordinator {
