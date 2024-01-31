@@ -48,3 +48,7 @@ public extension WebviewInjection {
             .webviewInjection()
     }
 }
+
+extension Array where Element == WebviewInjection {
+    public static var mandatoryInjections: [WebviewInjection] = [.invertionCss]
+}

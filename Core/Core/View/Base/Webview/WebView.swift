@@ -22,7 +22,7 @@ public struct WebView: UIViewRepresentable {
         let baseURL: String
         let injections: [WebviewInjection]?
         
-        public init(url: String, baseURL: String, injections: [WebviewInjection]? = nil) {
+        public init(url: String, baseURL: String, injections: [WebviewInjection]? = .mandatoryInjections) {
             self.url = url
             self.baseURL = baseURL
             self.injections = injections
